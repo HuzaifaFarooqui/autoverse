@@ -1,0 +1,78 @@
+[
+  {
+    "sessionId": "44f9b8c0885145b4",
+    "botId": "d4f019cc7743",
+    "createdAt": "2026-05-08T17:14:55.837Z",
+    "updatedAt": "2026-05-08T17:15:15.623Z",
+    "messages": [
+      {
+        "role": "user",
+        "content": "hello",
+        "timestamp": 1778260496895
+      },
+      {
+        "role": "assistant",
+        "content": "Assalamu alaikum! 😊 How can I help you today? \n\n**1. RESORT COLLAR STRIPED SHIRT**\n ![RESORT COLLAR STRIPED SHIRT](https://feelfitters.com/cdn/shop/files/Untitled_design_43.webp?v=1777044985&width=533)\n 💸 Price: 2049 PKR\n 🔗 [View Product](https://feelfitters.com/products/resort-collar-striped-shirt)\n\nWould any of these catch your eye?",
+        "timestamp": 1778260496895
+      },
+      {
+        "role": "user",
+        "content": "shirt ka  kb bola mn ne",
+        "timestamp": 1778260515622
+      },
+      {
+        "role": "assistant",
+        "content": "Bhala! Kuchh din pehle aapne RESORT COLLAR STRIPED SHIRT dekhkar kuchh khushi mahsoos ki thi, nahi? 😊\n\n**1. BAGGY FIT BEIGE RESORT COLLAR SHIRT**\n ![BAGGY FIT BEIGE RESORT COLLAR SHIRT](https://feelfitters.com/cdn/shop/files/Untitled_design_52.webp?v=1777495099&width=533)\n 💸 Price: 1850 PKR\n 🔗 [View Product](https://feelfitters.com/products/baggy-fit-beige-resort-collar-shirt)\n\n**2. MIDNIGHT BLUE BAGGY FIT HALF SLEEVES SHIRT**\n ![MIDNIGHT BLUE BAGGY FIT HALF SLEEVES SHIRT](https://feelfitters.com/cdn/shop/files/c_16.png?v=1777045047&width=533)\n 💸 Price: 1999 PKR\n 🔗 [View Product](https://feelfitters.com/products/baggy-fit-knitted-zipper-half-sleeves-shirt-copy)\n\nChalo, aapko kya passand aya? 😊",
+        "timestamp": 1778260515623
+      }
+    ]
+  },
+  {
+    "sessionId": "82c4ca706bd74c04",
+    "botId": "d524f2c5df81",
+    "createdAt": "2026-05-12T12:46:05.008Z",
+    "updatedAt": "2026-05-19T07:52:37.720Z",
+    "messages": [
+      {
+        "role": "user",
+        "content": "portfolio",
+        "timestamp": 1778589965399
+      },
+      {
+        "role": "assistant",
+        "content": "Your portfolio is just a click away. You can view it by clicking on the link \"View my portfolio\" in this webpage.",
+        "timestamp": 1778589965400
+      },
+      {
+        "role": "user",
+        "content": "hi",
+        "timestamp": 1779177116480
+      },
+      {
+        "role": "assistant",
+        "content": "Hi back! What's on your mind?",
+        "timestamp": 1779177116482
+      },
+      {
+        "role": "user",
+        "content": "download me a cv",
+        "timestamp": 1779177126342
+      },
+      {
+        "role": "assistant",
+        "content": "I can only assist you with questions related to this website and its content. How can I help you today?",
+        "timestamp": 1779177126343
+      },
+      {
+        "role": "user",
+        "content": "who is syedkonain nasir",
+        "timestamp": 1779177157719
+      },
+      {
+        "role": "assistant",
+        "content": "I can only assist you with questions related to this website and its content. How can I help you today?",
+        "timestamp": 1779177157720
+      }
+    ]
+  }
+]

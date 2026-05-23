@@ -1,0 +1,10 @@
+src/
+examples/
+scripts/
+.env
+.gitignore
+vitest.config.ts
+*.test.ts
+DOCUMENTATION.md
+DOCUMENTATION.doc
+tsconfig.json

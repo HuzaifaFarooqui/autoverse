@@ -1,0 +1,58 @@
+[
+  {
+    "botId": "ab503c76b28e",
+    "name": "support",
+    "websiteUrl": "http://localhost:8080/",
+    "groqModel": "llama3-8b-8192",
+    "appearance": {
+      "primaryColor": "#000000",
+      "accentColor": "#666666",
+      "position": "right",
+      "bubbleSize": 56,
+      "headerTitle": "Customer Support",
+      "welcomeMessage": "Hi! How can I help you today?",
+      "theme": "system",
+      "borderRadius": 16,
+      "accentMode": false,
+      "shadowIntensity": "medium",
+      "spacing": "comfortable",
+      "glassmorphism": true,
+      "buttonVariant": "solid"
+    },
+    "tone": {
+      "systemPrompt": "",
+      "language": "both",
+      "responseLength": "medium"
+    },
+    "createdAt": "2026-05-19T07:26:11.210Z",
+    "updatedAt": "2026-05-19T07:26:11.210Z"
+  },
+  {
+    "botId": "69961edf2a88",
+    "name": "support",
+    "websiteUrl": "http://localhost:8080/",
+    "groqModel": "llama3-8b-8192",
+    "appearance": {
+      "primaryColor": "#000000",
+      "accentColor": "#666666",
+      "position": "right",
+      "bubbleSize": 56,
+      "headerTitle": "Customer Support",
+      "welcomeMessage": "Hi! How can I help you today?",
+      "theme": "system",
+      "borderRadius": 16,
+      "accentMode": false,
+      "shadowIntensity": "medium",
+      "spacing": "comfortable",
+      "glassmorphism": true,
+      "buttonVariant": "solid"
+    },
+    "tone": {
+      "systemPrompt": "",
+      "language": "both",
+      "responseLength": "medium"
+    },
+    "createdAt": "2026-05-19T07:46:25.898Z",
+    "updatedAt": "2026-05-19T07:46:25.898Z"
+  }
+]

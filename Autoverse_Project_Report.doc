@@ -1,0 +1,229 @@
+<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+<head>
+    <meta charset="utf-8">
+    <title>Autoverse Agent - Comprehensive Project Report</title>
+    <style>
+        body { font-family: 'Calibri', sans-serif; color: #333333; line-height: 1.6; }
+        h1 { color: #2C3E50; text-align: center; font-size: 28pt; margin-top: 40px; margin-bottom: 5px; }
+        .subtitle { text-align: center; font-size: 14pt; color: #7f8c8d; margin-bottom: 40px; font-weight: normal; }
+        h2 { color: #2980B9; border-bottom: 2px solid #2980B9; padding-bottom: 5px; margin-top: 35px; font-size: 18pt; }
+        h3 { color: #27AE60; font-size: 14pt; margin-top: 25px; margin-bottom: 10px; }
+        h4 { color: #34495E; font-size: 12pt; margin-top: 15px; margin-bottom: 5px; }
+        p { font-size: 11pt; margin-bottom: 15px; text-align: justify; }
+        ul { font-size: 11pt; margin-bottom: 15px; }
+        li { margin-bottom: 8px; }
+        .highlight { background-color: #F4F6F7; padding: 15px; border-left: 4px solid #2980B9; font-style: italic; margin-bottom: 15px; }
+        .tech-tag { display: inline-block; background-color: #E8F8F5; color: #117A65; padding: 2px 6px; border-radius: 4px; font-size: 10pt; font-weight: bold; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+        th, td { border: 1px solid #BDC3C7; padding: 10px; text-align: left; font-size: 11pt; }
+        th { background-color: #ECF0F1; color: #2C3E50; }
+    </style>
+</head>
+<body>
+
+    <h1>Autoverse Agent</h1>
+    <div class="subtitle">Comprehensive Final Project Report & Feature Specification</div>
+
+    <h2>1. Executive Summary</h2>
+    <p>
+        <strong>Autoverse Agent</strong> is a full-stack, zero-configuration Artificial Intelligence platform designed to democratize AI customer service. It provides website owners with a drop-in chat widget that autonomously reads, understands, and serves the content of their website to visitors. By combining web scraping, Retrieval-Augmented Generation (RAG), and advanced prompt engineering via the Groq API, Autoverse delivers a highly accurate, multi-lingual, and context-aware virtual assistant capable of acting as both an informational guide and an automated e-commerce sales agent.
+    </p>
+
+    <h2>2. System Architecture</h2>
+    <p>The system is built on a modern, decoupled architecture ensuring high performance and modularity:</p>
+    
+    <h3>2.1 Backend Engine (Node.js & Express)</h3>
+    <ul>
+        <li><strong>TypeScript Core:</strong> Strongly typed backend ensuring data integrity across API routes and AI logic.</li>
+        <li><strong>Groq API Integration:</strong> Utilizes Groq's high-speed inference engine (Llama-3 models) to generate responses in milliseconds, providing real-time chat experiences.</li>
+        <li><strong>File-Based Storage:</strong> To ensure true "zero-config" deployment without requiring complex database setups (like PostgreSQL or MongoDB), the system uses local, structured JSON files (<code>bots.json</code>, <code>history.json</code>) to persist bot configurations and chat histories.</li>
+        <li><strong>CORS & Security:</strong> Fully configured Cross-Origin Resource Sharing (CORS) allowing the chat widget to be embedded on any external domain securely.</li>
+    </ul>
+
+    <h3>2.2 Admin Dashboard (React & Vite)</h3>
+    <ul>
+        <li><strong>Single Page Application (SPA):</strong> Built with React 18 and bundled with Vite for instantaneous hot-reloading and fast production builds.</li>
+        <li><strong>State Management:</strong> Uses customized hooks and API clients to sync UI state with the backend dynamically.</li>
+        <li><strong>Live Preview:</strong> As administrators tweak colors, fonts, and settings, the dashboard updates a live preview of the widget instantly.</li>
+    </ul>
+
+    <h3>2.3 Embeddable Chat Widget</h3>
+    <ul>
+        <li><strong>Vanilla JavaScript Injection:</strong> A lightweight, dependency-free script (<code>widget.js</code>) that injects the chat interface into the host website's DOM.</li>
+        <li><strong>Shadow DOM / Scoped CSS:</strong> Ensures the widget's styles do not conflict with the host website's CSS, and vice versa.</li>
+    </ul>
+
+    <h2>3. Major Features (Deep Dive)</h2>
+
+    <h3>3.1 Automated Web Scraping & Ingestion</h3>
+    <p>When a user creates a bot and provides a URL, the backend utilizes the <strong>Cheerio</strong> library to perform a deep scrape of the target website.</p>
+    <ul>
+        <li><strong>Text Extraction:</strong> Intelligently parses HTML to extract meaningful paragraphs, headings, and descriptions while ignoring navigational boilerplate.</li>
+        <li><strong>Product Detection:</strong> Scans for e-commerce metadata (prices, inventory status, product images). If found, it categorizes these specifically as "products" in the vector store rather than standard text.</li>
+    </ul>
+
+    <h3>3.2 Advanced Retrieval-Augmented Generation (RAG)</h3>
+    <p>Instead of relying on the AI's general knowledge (which causes hallucinations), the system uses RAG.</p>
+    <ul>
+        <li><strong>Vector Embeddings:</strong> Scraped content is converted into mathematical vectors.</li>
+        <li><strong>Semantic Search:</strong> When a user asks a question, the system calculates the <em>cosine similarity</em> between the user's question and the stored vectors, retrieving only the most relevant paragraphs to feed to the LLM.</li>
+        <li><strong>Response Caching:</strong> Frequently asked questions are cached in memory (<code>cache.ts</code>) to bypass the LLM API, reducing latency to near-zero and saving API costs.</li>
+    </ul>
+
+    <h3>3.3 Dynamic Persona & Contextual Adaptation</h3>
+    <p>The system prompt is highly dynamic and generates rules on the fly based on the scraped data.</p>
+    <ul>
+        <li><strong>Portfolio/Service Mode:</strong> If the scraper finds no products (e.g., a CV or portfolio site), the AI adopts an informational, polite, and helpful persona, completely hiding any sales or shopping logic.</li>
+        <li><strong>E-Commerce Mode:</strong> If products are detected, the AI injects special "E-Commerce Rules" into its brain. It learns to display products with images and prices, check inventory, and even execute a multi-step <strong>Order Automation Flow</strong> (collecting Name, Phone, Address, and Payment Method).</li>
+    </ul>
+
+    <h3>3.4 Strict Multi-Lingual Enforcement</h3>
+    <p>The agent is specifically engineered for the South Asian demographic, fully supporting English, Urdu, and Roman Urdu.</p>
+    <ul>
+        <li><strong>Anti-Code-Switching Logic:</strong> LLMs naturally tend to mix English and Roman Urdu. Autoverse implements strict prompt boundaries: If a user types in English (even a single word like "portfolio"), the AI locks into English. If they use Roman Urdu, it responds strictly in Roman Urdu.</li>
+        <li><strong>Humanized Tone:</strong> Rules are in place to prevent the AI from sounding like a textbook or a dramatic poet (e.g., banning phrases like "Wahai dost" or "Assalamu alaikum" in English queries), forcing it to speak like a modern, casual Gen-Z/Millennial.</li>
+    </ul>
+
+    <h3>3.5 Off-Topic Query Protection</h3>
+    <p>The RAG pipeline contains strict refusal mechanisms. If a user asks about coding, math, general science, or historical facts unrelated to the website, the AI politely refuses to answer, protecting the brand's identity and saving API tokens.</p>
+
+    <h2>4. Minor Features & Granular Customizations</h2>
+    
+    <h3>4.1 UI & Appearance Settings</h3>
+    <p>The dashboard provides granular control over the widget's look and feel:</p>
+    <ul>
+        <li><strong>Colors:</strong> Custom Primary and Accent color pickers.</li>
+        <li><strong>Positioning:</strong> Toggle between Bottom-Left and Bottom-Right screen placement.</li>
+        <li><strong>Sizing:</strong> Adjustable chat bubble sizes (Small, Medium, Large).</li>
+        <li><strong>Border Radius:</strong> Sharp edges, rounded corners, or pill-shaped designs.</li>
+        <li><strong>Modern Effects:</strong> Toggles for <em>Glassmorphism</em> (translucent, blurred backgrounds), Shadow Intensity (Low, Medium, High), and Button Variants (Solid, Outline, Ghost).</li>
+        <li><strong>Dual-Color Gradients:</strong> Option to enable vibrant gradient headers using the primary and accent colors.</li>
+    </ul>
+
+    <h3>4.2 Chat History & Session Management</h3>
+    <p>Data persistence and monitoring for administrators:</p>
+    <ul>
+        <li><strong>Session Tracking:</strong> Every unique visitor is assigned a UUID, and their conversation history is persistently saved to <code>history.json</code>.</li>
+        <li><strong>Transcript Viewing:</strong> Admins can read full chat logs in the dashboard to understand customer needs.</li>
+        <li><strong>Granular Deletion:</strong> Implemented REST API endpoints allowing admins to delete specific spam/test sessions individually.</li>
+        <li><strong>Bulk Clear:</strong> A "Clear All History" feature to wipe the bot's memory entirely.</li>
+    </ul>
+
+    <h3>4.3 Tone & Prompt Configuration</h3>
+    <ul>
+        <li><strong>Custom Instructions:</strong> Admins can inject specific rules (e.g., "Always greet the user with 'Howdy Partner'").</li>
+        <li><strong>Response Length:</strong> Settings to force the AI to be concise (Short), balanced (Medium), or highly detailed (Long).</li>
+    </ul>
+
+    <h2>5. Technologies & Libraries Used</h2>
+    <table>
+        <tr>
+            <th>Category</th>
+            <th>Technologies</th>
+        </tr>
+        <tr>
+            <td><strong>Backend</strong></td>
+            <td>Node.js, Express.js, TypeScript, TS-Node</td>
+        </tr>
+        <tr>
+            <td><strong>Frontend</strong></td>
+            <td>React 18, Vite, React Router DOM</td>
+        </tr>
+        <tr>
+            <td><strong>AI & Data</strong></td>
+            <td>Groq API (Llama-3), Cheerio (Web Scraping), Custom Vector Math</td>
+        </tr>
+        <tr>
+            <td><strong>Utilities</strong></td>
+            <td>Axios (HTTP requests), UUID (Session tracking), CORS</td>
+        </tr>
+        <tr>
+            <td><strong>Styling</strong></td>
+            <td>Vanilla CSS (Custom CSS Variables), Lucide React (Icons)</td>
+        </tr>
+    </table>
+
+    <h2>6. Complete File Architecture & Technical Analysis</h2>
+    <p>This section provides a comprehensive breakdown of every critical file in the project workspace, analyzing its purpose and justifying its existence from the perspectives of <strong>Security</strong>, <strong>Speed</strong>, and <strong>Best Practices</strong>.</p>
+
+    <h3>6.1 Backend System (<code>autoverse-agent/</code>)</h3>
+    
+    <h4>6.1.1 Root Configuration Files</h4>
+    <ul>
+        <li><code>package.json</code> & <code>package-lock.json</code>: Manages Node.js dependencies. Using a locked file ensures deterministic builds and protects against supply-chain attacks (Security), while avoiding dependency resolution overhead during deployment (Speed).</li>
+        <li><code>tsconfig.json</code> & <code>tsconfig.dev.json</code>: Strict TypeScript configurations. Enforcing static typing eliminates entire classes of runtime errors and type-confusion vulnerabilities (Security), whilst enabling the V8 engine to optimize code execution better (Speed).</li>
+        <li><code>tsup.config.ts</code>: Configures <code>tsup</code>, an esbuild-powered bundler. Esbuild compiles TypeScript natively in Go, offering compilation speeds 10-100x faster than traditional tsc or Webpack (Speed).</li>
+        <li><code>vitest.config.ts</code>: Configures the Vitest framework. It natively runs tests concurrently in worker threads, dramatically speeding up continuous integration pipelines (Speed).</li>
+        <li><code>.env</code>: Environment variable definitions. Keeps API keys and sensitive configuration out of version control, which is a fundamental security requirement (Security).</li>
+    </ul>
+
+    <h4>6.1.2 Core Source Files (<code>/src</code>)</h4>
+    <ul>
+        <li><code>autoverse.ts</code>: The central orchestrator class. It encapsulates the bot's state, preventing global scope pollution and memory leaks (Security & Best Practice).</li>
+        <li><code>server.ts</code>: The Express.js server entry point. It configures strictly defined CORS headers and routing, dropping unauthorized external requests instantly before they reach the logic layer (Security).</li>
+        <li><code>widget.ts</code>: The source code for the frontend injection script. It is compiled into a lightweight, zero-dependency vanilla JS bundle to guarantee millisecond load times on client websites without blocking the main thread (Speed).</li>
+        <li><code>browser.ts</code> & <code>index.ts</code>: Module boundaries. <code>index.ts</code> explicitly defines the public API, preventing exposure of internal utility functions to external modules (Security).</li>
+    </ul>
+
+    <h4>6.1.3 Agent Logic Layer (<code>/src/agent</code>)</h4>
+    <ul>
+        <li><code>intentClassifier.ts</code>: Pre-processes user input to determine the query type before invoking heavy LLMs. This acts as a routing optimization, bypassing expensive operations for simple queries (Speed).</li>
+        <li><code>action.ts</code> & <code>actionExecutor.ts</code>: Defines and executes rigid functional schemas. By forcing the AI to output strictly formatted JSON actions (rather than executing raw code or SQL), this creates a hard security boundary against Prompt Injection and unauthorized data access (Security).</li>
+        <li><code>planner.ts</code>: Breaks down multi-step user queries, ensuring logical execution without overloading the LLM context window, which reduces token processing latency (Speed).</li>
+    </ul>
+
+    <h4>6.1.4 Retrieval & AI Core (<code>/src/core</code>)</h4>
+    <ul>
+        <li><code>groq.ts</code>: The interface for the Groq API. Groq runs on specialized Language Processing Units (LPUs) rather than GPUs, achieving 500+ tokens per second. This makes the AI feel instantaneous to the end-user (Speed).</li>
+        <li><code>rag.ts</code>: Orchestrates Retrieval-Augmented Generation. This strictly limits the AI to only use authorized context provided by the vector store, heavily reducing hallucinations and preventing the AI from leaking general, potentially unsafe knowledge (Security).</li>
+        <li><code>cache.ts</code>: An in-memory key-value cache. It intercepts repeated queries (e.g., "What is your pricing?") and serves them instantly without hitting the Groq API, providing sub-millisecond response times and protecting against Denial-of-Wallet (DoW) attacks (Speed & Security).</li>
+        <li><code>vectorStore.ts</code> & <code>embeddings.ts</code>: Manages mathematical representations of text. Uses high-performance cosine-similarity math algorithms to instantly find relevant text chunks among thousands of lines of scraped data (Speed).</li>
+        <li><code>retriever.ts</code>: The bridge between the vector store and the RAG pipeline.</li>
+    </ul>
+
+    <h4>6.1.5 Data Ingestion (<code>/src/ingestion</code>)</h4>
+    <ul>
+        <li><code>crawler.ts</code>: Navigates target websites. It is designed with strict timeouts and concurrency limits to prevent the server from being bogged down by infinite loops or tarpits (Speed & Security).</li>
+        <li><code>extractor.ts</code>: Uses Cheerio to parse HTML. Because Cheerio works on raw markup rather than spinning up a headless browser, it extracts data incredibly fast. It also sanitizes scraped HTML to prevent Stored XSS if the data is ever rendered raw (Speed & Security).</li>
+    </ul>
+
+    <h4>6.1.6 Persistence & Types (<code>/src/store</code>, <code>/src/types</code>)</h4>
+    <ul>
+        <li><code>botStore.ts</code> & <code>historyStore.ts</code>: Manages file-based persistence. By separating bot configuration from chat logs, the system ensures that high-frequency write operations (chatting) do not lock or corrupt read-heavy configuration files (Speed & Security).</li>
+        <li><code>bot.ts</code>, <code>product.ts</code>: TypeScript interfaces. They provide strict data contracts. Any malformed data coming from the database or API is caught at the boundary layer, preventing catastrophic runtime crashes (Security).</li>
+    </ul>
+
+    <h3>6.2 Frontend Dashboard (<code>dashboard/</code>)</h3>
+
+    <h4>6.2.1 Root Configuration Files</h4>
+    <ul>
+        <li><code>vite.config.ts</code>: Configures the Vite bundler. Vite leverages native ES modules during development for instant Hot Module Replacement (HMR) and uses highly optimized Rollup for production builds, resulting in lightning-fast loading of the dashboard (Speed).</li>
+        <li><code>package.json</code> & <code>tsconfig.json</code>: Maintains dependency integrity and strict typing for the React application.</li>
+    </ul>
+
+    <h4>6.2.2 Core App Files (<code>/src</code>)</h4>
+    <ul>
+        <li><code>main.tsx</code>: The React DOM entry point. Uses React 18's Concurrent Mode (`createRoot`) to keep the UI responsive even during heavy state updates (Speed).</li>
+        <li><code>App.tsx</code>: Defines the routing structure. It enables client-side routing so the browser doesn't need to reload the page when navigating between settings and bot lists, providing a native app-like experience (Speed).</li>
+        <li><code>index.css</code>: Vanilla CSS with custom properties (variables). Bypassing heavy CSS frameworks ensures the smallest possible payload and fastest browser render times (Speed).</li>
+    </ul>
+
+    <h4>6.2.3 API Integration (<code>/src/api</code>)</h4>
+    <ul>
+        <li><code>client.ts</code>: Centralized Axios instance. It handles all backend communication, ensuring that authorization headers (if added) and error handling are uniformly applied to every single request, preventing secure routes from being accidentally hit without credentials (Security).</li>
+    </ul>
+
+    <h4>6.2.4 User Interface Components (<code>/src/components</code>, <code>/src/pages</code>)</h4>
+    <ul>
+        <li><code>BotHistory.tsx</code>: Renders the chat logs. It isolates the rendering logic, ensuring that viewing massive chat histories doesn't cause the rest of the application to lag (Speed).</li>
+        <li><code>CodeSnippet.tsx</code>: Displays the embed code to the user. It explicitly sanitizes the output to ensure no malicious scripts can be injected into the admin's clipboard (Security).</li>
+        <li><code>WidgetPreview.tsx</code>: Renders a live visual preview of the bot based on user settings. The component securely parses user-inputted hex codes and CSS values, preventing CSS injection attacks within the dashboard (Security).</li>
+        <li><code>BotList.tsx</code>, <code>BotSettings.tsx</code>, <code>CreateBot.tsx</code>: The main views. These forms utilize controlled React components, meaning input is strictly validated in memory before it is ever sent to the server, providing the first line of defense against malformed data (Security).</li>
+    </ul>
+
+    <div style="margin-top: 40px; border-top: 1px solid #BDC3C7; padding-top: 20px; text-align: center; font-size: 10pt; color: #7f8c8d;">
+        <strong>Autoverse Agent</strong> - Detailed Architecture & Feature Specification Document
+    </div>
+
+</body>
+</html>
