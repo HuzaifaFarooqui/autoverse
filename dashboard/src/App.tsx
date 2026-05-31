@@ -22,7 +22,40 @@ function App() {
   };
 
   useEffect(() => {
-    checkStatus(serverUrl);
+    // Check if there is an auto-connect query parameter (e.g. ?connect=http://localhost:3000)
+    const params = new URLSearchParams(window.location.search);
+    const connectParam = params.get("connect");
+
+    if (connectParam) {
+      const handleAutoConnect = async () => {
+        setStatus("checking");
+        let targetUrl = connectParam.trim();
+        if (!/^https?:\/\//i.test(targetUrl)) {
+          targetUrl = `http://${targetUrl}`;
+        }
+        
+        const works = await testConnection(targetUrl);
+        if (works) {
+          setApiBase(targetUrl);
+          setServerUrl(targetUrl);
+          setStatus("connected");
+          
+          // Clean the address bar URL by removing query parameters
+          const cleanPath = window.location.origin + window.location.pathname;
+          window.history.replaceState({}, document.title, cleanPath);
+          
+          // Reload page to refresh all data queries
+          window.location.reload();
+        } else {
+          setStatus("disconnected");
+          checkStatus(serverUrl);
+        }
+      };
+      
+      handleAutoConnect();
+    } else {
+      checkStatus(serverUrl);
+    }
     
     // Periodically ping to ensure server stays online
     const interval = setInterval(() => {
@@ -140,7 +173,7 @@ function App() {
             fontSize: 11,
             color: "var(--text-muted)",
           }}>
-            Autoverse Agent v2.5.2
+            Autoverse FYP v1.0.0
           </div>
         </aside>
 
@@ -160,7 +193,7 @@ function App() {
           <div className="modal-content">
             <div className="modal-header">
               <h3>Autoverse Server Connection</h3>
-              <p>Connect this dashboard to your hosted autoverse-agent package server.</p>
+              <p>Connect this dashboard to your hosted autoverse-fyp package server.</p>
             </div>
             <form onSubmit={handleConnect}>
               <div className="form-group">

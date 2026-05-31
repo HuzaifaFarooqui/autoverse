@@ -145,7 +145,7 @@ export function getEmbedScript(botId: string, serverUrl: string): string {
 }
 
 export function getEmbedNpm(botId: string): string {
-  return `import { initWidget } from "autoverse-agent";
+  return `import { initWidget } from "autoverse-fyp";
 
 initWidget({ botId: "${botId}" });`;
 }

@@ -1,7 +1,7 @@
 import { defineConfig } from "tsup";
 
 export default defineConfig([
-    // === NODE BUILD (server, Express middleware, Autoverse class) ===
+    // === CLIENT BUNDLE (React/NPM usage) ===
     {
         entry: { index: "src/index.ts" },
         format: ["cjs", "esm"],
@@ -10,11 +10,10 @@ export default defineConfig([
         splitting: false,
         sourcemap: false,
         clean: true,
-        external: ["express", "cors", "axios", "cheerio", "uuid", "path", "fs"],
-        target: "node18",
-        platform: "node",
+        target: "es2020",
+        platform: "browser",
     },
-    // === BROWSER BUILD (widget only — pure ESM, no Node deps) ===
+    // === BROWSER EMBED (script tags / meta tags) ===
     {
         entry: { browser: "src/browser.ts" },
         format: ["esm"],
@@ -22,8 +21,8 @@ export default defineConfig([
         outDir: "dist",
         splitting: false,
         sourcemap: false,
-        clean: false, // don't wipe node build
-        noExternal: [/.*/], // bundle everything into one file
+        clean: false,
+        noExternal: [/.*/],
         platform: "browser",
         target: "es2020",
         define: {

@@ -1,10 +1,10 @@
 <p align="center">
-  <img src="https://img.shields.io/npm/v/autoverse-agent?color=667eea&style=for-the-badge&labelColor=0a0a1a" alt="npm version" />
-  <img src="https://img.shields.io/npm/dm/autoverse-agent?color=764ba2&style=for-the-badge&labelColor=0a0a1a" alt="downloads" />
+  <img src="https://img.shields.io/npm/v/autoverse-fyp?color=667eea&style=for-the-badge&labelColor=0a0a1a" alt="npm version" />
+  <img src="https://img.shields.io/npm/dm/autoverse-fyp?color=764ba2&style=for-the-badge&labelColor=0a0a1a" alt="downloads" />
   <img src="https://img.shields.io/badge/license-MIT-34d399?style=for-the-badge&labelColor=0a0a1a" alt="license" />
 </p>
 
-<h1 align="center">🤖 Autoverse Agent</h1>
+<h1 align="center"> Autoverse Agent</h1>
 
 <p align="center">
   <strong>Zero-config AI customer service chatbot for any website.</strong><br/>
@@ -16,56 +16,66 @@
 
 ## ✨ Features
 
-- 🚀 **One-line install** — `import "autoverse-agent"` and the widget appears
-- 🧠 **Auto-learns your site** — Scrapes products, pages, and APIs automatically
-- 🛒 **Order automation** — Collects customer details and places orders step-by-step
-- 🎨 **Fully customizable** — Colors, theme, position, tone via admin dashboard
-- 🌍 **Bilingual** — English + Urdu with auto-detection
-- 🔑 **Multi-tenant** — One server, unlimited chatbots with unique Bot IDs
-- 📡 **Network interception** — Auto-indexes API responses for richer context
-- 💬 **Human-like tone** — Sounds like a luxury store concierge, not a robot
+-**One-line install** — `import "autoverse-fyp"` and the widget appears
+-**Auto-learns your site** — Scrapes products, pages, and APIs automatically
+-**Order automation** — Collects customer details and places orders step-by-step
+-**Fully customizable** — Colors, theme, position, tone via admin dashboard
+-**Bilingual** — English + Urdu with auto-detection
+-**Multi-tenant** — One server, unlimited chatbots with unique Bot IDs
+-**Network interception** — Auto-indexes API responses for richer context
+-**Human-like tone** — Sounds like a luxury store concierge, not a robot
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
-### 1. Install the package
+- ### 1. Install the package
 
 ```bash
-npm install autoverse-agent
+npm install autoverse-fyp
 ```
 
-### 2. Add one line to your app
+- ### 2. Add one line to your app
 
 ```typescript
-import "autoverse-agent";
+import "autoverse-fyp";
 ```
 
 That's it. A chat bubble appears on your website. Click it, enter your **Bot ID**, and your AI assistant is live.
 
 ---
 
-## 📋 How It Works
+## How It Works
+
+This project is built using a highly decoupled, production-ready microservices architecture. It separates client-side embeds, administrative controls, and core RAG operations to achieve extreme performance, security, and scalability:
 
 ```
-┌──────────────────────────────────────────────────┐
-│            AUTOVERSE SERVER (deploy once)         │
-│                                                   │
-│   Admin Dashboard  ◄────►  API + AI Engine        │
-│   (create & manage bots)   (Groq LLM + RAG)      │
-└──────────────────┬───────────────────────────────┘
-                   │
-      ┌────────────┼────────────┐
-      ▼            ▼            ▼
-  Website A    Website B    Website C
-  botId: abc   botId: def   botId: ghi
-  💬 Widget    💬 Widget    💬 Widget
+Customer Website (Host Environment)
+        │
+        ▼
+autoverse-agent widget (Injected client bundle)
+        │
+        ▼
+api.autoverse.com (High-speed API gateway / autoverse-server)
+        │
+        ├─ AI responses (Groq Llama-3.1 + local vector RAG)
+        ├─ chat history
+        ├─ bot configs
+        └─ sessions
+        │
+        ▼
+Database (Persistence Layer)
+        │
+        ▼
+Vercel Dashboard (Decoupled Admin Panel)
 ```
 
-1. **Deploy the Autoverse server** once (locally or on Railway/Render/VPS)
-2. **Create a bot** in the admin dashboard — get a unique Bot ID
-3. **Install the npm package** on any website
-4. **Enter the Bot ID** in the widget — your AI assistant starts working
+1. **Deploy the backend API server (`autoverse-server`)** to **Railway** (mapping to `api.autoverse.com`)
+2. **Deploy the Admin Dashboard (`dashboard`)** to **Vercel**
+3. **Configure your Database** for storing bot configurations, chat logs, and sessions
+4. **Create a bot** in the Vercel dashboard to receive a unique Bot ID
+5. **Install the npm package (`autoverse-fyp`)** or inject the script tag on any customer website
+6. **Connect the widget** with your Bot ID, and your custom AI concierge goes live!
 
 ---
 
@@ -74,17 +84,17 @@ That's it. A chat bubble appears on your website. Click it, enter your **Bot ID*
 ### Method 1: NPM Package (Recommended)
 
 ```bash
-npm install autoverse-agent
+npm install autoverse-fyp
 ```
 
 **Zero-config (setup via widget):**
 ```typescript
-import "autoverse-agent";
+import "autoverse-fyp";
 ```
 
 **Pre-configured (skip setup screen):**
 ```typescript
-import { initWidget } from "autoverse-agent";
+import { initWidget } from "autoverse-fyp";
 
 initWidget({ botId: "YOUR_BOT_ID" });
 ```
@@ -101,14 +111,14 @@ initWidget({ botId: "YOUR_BOT_ID" });
 <meta name="autoverse-bot-id" content="YOUR_BOT_ID">
 ```
 ```typescript
-import "autoverse-agent";
+import "autoverse-fyp";
 ```
 
 ### Method 4: Express Middleware
 
 ```typescript
 import express from "express";
-import { autoverse } from "autoverse-agent";
+import { autoverse } from "autoverse-fyp";
 
 const app = express();
 app.use(autoverse());
@@ -117,7 +127,7 @@ app.listen(3000);
 
 ---
 
-## 🎛️ Admin Dashboard
+## Admin Dashboard
 
 The Autoverse dashboard lets you manage multiple chatbots from one place.
 
@@ -125,9 +135,9 @@ The Autoverse dashboard lets you manage multiple chatbots from one place.
 
 | Tab | What You Can Do |
 |-----|----------------|
-| 🎨 **Appearance** | Primary/accent colors, dark/light theme, position, bubble size, welcome message |
-| 🗣️ **Tone** | Language preference, response length, custom system prompt |
-| 🔗 **Integration** | Copy-paste embed codes, view Bot ID, creation date |
+| **Appearance** | Primary/accent colors, dark/light theme, position, bubble size, welcome message |
+| **Tone** | Language preference, response length, custom system prompt |
+| **Integration** | Copy-paste embed codes, view Bot ID, creation date |
 
 ### Live Preview
 
@@ -135,14 +145,14 @@ Changes are applied **instantly** — no redeployment needed. The widget fetches
 
 ---
 
-## 🛒 Order Automation
+## Order Automation
 
 The chatbot handles the full order flow automatically:
 
 ```
 Customer: "I want to buy the Swiss Army Knife"
 
-Bot: "Great choice! 🎉 The Swiss Army Knife is $49.99.
+Bot: "Great choice! The Swiss Army Knife is $49.99.
       How many would you like?"
 
 Customer: "2 please"
@@ -164,51 +174,50 @@ Bot: "Would you like Cash on Delivery or online payment?"
 Customer: "COD"
 
 Bot: "Let me confirm your order:
-      📦 Product: Swiss Army Knife x 2
-      💸 Total: $99.98
-      👤 Name: Ahmed Khan
-      📱 Phone: 0300-1234567
-      📍 Address: House 12, Street 5, DHA Phase 2, Lahore
-      💳 Payment: Cash on Delivery
-
+      Product: Swiss Army Knife x 2
+      Total: $99.98
+      Name: Ahmed Khan
+      Phone: 0300-1234567
+      Address: House 12, Street 5, DHA Phase 2, Lahore
+      Payment: Cash on Delivery
       Shall I place this order for you?"
 
 Customer: "Yes"
 
-Bot: "✅ Order Placed Successfully!
-      🎉 Order #AV-482916
+Bot: "Order Placed Successfully!
+      Order #AV-482916
       Your order will be processed shortly.
       By the way, you might also love these..."
 ```
 
 ---
 
-## 🖥️ Server Setup
+## Server Setup (autoverse-server)
 
 ### Running Locally
 
 ```bash
-# Clone the repo
+# Clone the repository
 git clone https://github.com/your-repo/autoverse-agent.git
-cd autoverse-agent
+cd autoverse-agent-main
 
-# Install dependencies
-cd autoverse-agent && npm install
+# Install dependencies for both projects
+cd autoverse-server && npm install
 cd ../dashboard && npm install
 
-# Build everything
-cd ../autoverse-agent && npm run build
-cd ../dashboard && npx vite build
+# Start the backend server in development mode
+cd ../autoverse-server && npm run dev
 
-# Start the server
-cd ../autoverse-agent && npm run serve
+# Start the admin dashboard in development mode
+cd ../dashboard && npm run dev
 ```
 
-Dashboard opens at **http://localhost:3000**
+- Backend API runs at: **http://localhost:3000**
+- Local Dashboard opens at: **http://localhost:5173**
 
 ### Environment Variables
 
-Create a `.env` file in the `autoverse-agent` directory:
+Create a `.env` file in the `autoverse-server` directory:
 
 ```env
 # Required
@@ -238,42 +247,68 @@ PUBLIC_URL=http://localhost:3000 # Your server's public URL
 
 ---
 
-## 🚢 Deploy to Production
+## Deploy to Production
 
-### Railway
+### 1. Deploy Backend API to Railway
 
-1. Push the repo to GitHub
-2. Connect to [Railway](https://railway.app)
-3. Set environment variables:
+1. Link your GitHub repository to [Railway](https://railway.app).
+2. Deploy the `autoverse-server` subdirectory.
+3. Configure the following environment variables:
+   ```env
+   GROQ_API_KEY=gsk_your_api_key
+   PUBLIC_URL=https://api.autoverse.com  # Or your Railway app domain
+   PORT=3000
    ```
-   GROQ_API_KEY=gsk_...
-   PUBLIC_URL=https://your-app.railway.app
+4. Set the build command:
+   ```bash
+   npm run build
    ```
-4. Set build command:
-   ```
-   cd autoverse-agent && npm install && npm run build && cd ../dashboard && npm install && npx vite build
-   ```
-5. Set start command:
-   ```
-   cd autoverse-agent && node -e "require('dotenv').config(); require('./dist/server').startServer()"
+5. Set the start command:
+   ```bash
+   npm start
    ```
 
-### Render / Fly.io / VPS
+### 2. Deploy Admin Dashboard to Vercel
 
-Same pattern — set `PUBLIC_URL` to your deployed URL, build both projects, and start the server.
+1. Import your workspace in [Vercel](https://vercel.com).
+2. Target the `dashboard` folder as the Root Directory.
+3. Configure the API build environment variable:
+   ```env
+   VITE_API_URL=https://api.autoverse.com  # Point to your API gateway
+   ```
+4. Set the Build Command:
+   ```bash
+   npm run build
+   ```
+5. Set the Output Directory:
+   ```
+   dist
+   ```
+6. Click **Deploy**. Your dashboard is now live on Vercel's global Edge CDN!
 
-> **Important:** After deploying, update the `AUTOVERSE_CLOUD_URL` constant in `widget.ts` to your production URL, rebuild, and republish the npm package. This makes `import "autoverse-agent"` connect to your server automatically.
+### 3. Deploy NPM Widget Package
+
+1. Sign in to your developer console on the [NPM Registry](https://npmjs.com).
+2. Inside the `autoverse-fyp` folder, verify the default `AUTOVERSE_CLOUD_URL` in `src/widget.ts` points to `https://api.autoverse.com`.
+3. Build the widget bundle:
+   ```bash
+   npm run build
+   ```
+4. Publish the optimized package:
+   ```bash
+   npm publish --access public
+   ```
 
 ---
 
-## 📦 API Reference
+## API Reference
 
 ### `initWidget(options?)`
 
 Initialize the chat widget manually.
 
 ```typescript
-import { initWidget } from "autoverse-agent";
+import { initWidget } from "autoverse-fyp";
 
 initWidget({
   botId: "abc123",              // Optional: skip setup screen
@@ -291,7 +326,7 @@ initWidget({
 Express middleware for server-side integration.
 
 ```typescript
-import { autoverse } from "autoverse-agent";
+import { autoverse } from "autoverse-fyp";
 
 app.use(autoverse({
   groqModel: "llama3-8b-8192",
@@ -305,7 +340,7 @@ app.use(autoverse({
 Start a standalone Autoverse server with built-in dashboard.
 
 ```typescript
-import { startServer } from "autoverse-agent";
+import { startServer } from "autoverse-fyp";
 
 startServer({
   port: 3000,
@@ -316,7 +351,7 @@ startServer({
 
 ---
 
-## 🔌 REST API Endpoints
+## REST API Endpoints
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
@@ -333,7 +368,7 @@ startServer({
 
 ---
 
-## 🤝 How the NPM Package Connects to the Dashboard
+## How the NPM Package Connects to the Dashboard
 
 ```
   Developer's Website                    Your Autoverse Server
@@ -341,7 +376,7 @@ startServer({
   │                 │                   │                     │
   │  import         │   Bot ID          │   Admin Dashboard   │
   │  "autoverse-    │ ◄──────────────── │   (create bots,     │
-  │   agent"        │                   │    customize look)   │
+  │   fyp"          │                   │    customize look)   │
   │                 │                   │                     │
   │  💬 Widget      │ ──── API ────►    │   AI Engine         │
   │  appears!       │ ◄── Response ──── │   (Groq + RAG)      │
@@ -350,13 +385,13 @@ startServer({
 ```
 
 1. Admin creates a bot in the dashboard → gets a **Bot ID**
-2. Developer installs `autoverse-agent` on their website
+2. Developer installs `autoverse-fyp` on their website
 3. Widget auto-appears → user enters the Bot ID
 4. Widget connects to the server → AI starts helping customers
 5. Admin can change appearance/tone anytime from the dashboard — changes apply instantly
 
 ---
 
-## 📝 License
+## License
 
-MIT © [Autoverse](https://github.com/your-repo/autoverse-agent)
+MIT © [Autoverse](https://github.com/your-repo/autoverse-fyp)

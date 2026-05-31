@@ -272,12 +272,13 @@ export async function startServer(config: ServerConfig = {}) {
     });
 
     app.listen(port, () => {
-        console.log(`\n Autoverse Agent running on ${publicUrl}`);
-        console.log(` Dashboard: ${publicUrl}`);
-        console.log(`\n To embed on any website, add this script tag:`);
+        console.log(`\n 🤖 Autoverse Agent running on ${publicUrl}`);
+        console.log(` 📊 Local Dashboard: ${publicUrl}`);
+        console.log(` ☁️  Cloud Dashboard: https://autoverse-sand.vercel.app?connect=${publicUrl}`);
+        console.log(`\n 📦 To embed on any website, add this script tag:`);
         console.log(`   <script src="${publicUrl}/autoverse/widget.js?botId=YOUR_BOT_ID"></script>`);
-        console.log(`\n Or with npm:`);
-        console.log(`   import { initWidget } from "autoverse-agent";`);
+        console.log(`\n 📦 Or with npm:`);
+        console.log(`   import { initWidget } from "autoverse-fyp";`);
         console.log(`   initWidget({ botId: "YOUR_BOT_ID" });\n`);
     });
 

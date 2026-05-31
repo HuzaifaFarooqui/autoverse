@@ -365,7 +365,7 @@ export default function BotSettings() {
             <p style={{ color: "var(--text-secondary)", marginBottom: 16, fontSize: 14 }}>
               Install the package and call <code style={{ color: "var(--accent-primary)" }}>initWidget()</code> in your app. The widget auto-connects to your server.
             </p>
-            <CodeSnippet code="npm install autoverse-agent" language="bash" />
+            <CodeSnippet code="npm install autoverse-fyp" language="bash" />
             <div style={{ height: 16 }} />
             <CodeSnippet code={getEmbedNpm(bot.botId)} language="typescript" />
           </div>

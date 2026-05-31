@@ -564,14 +564,14 @@ export function getWidgetHTML(serverUrl: string, botId: string): string {
 /**
  * Default cloud server URL. Update this to your deployed server.
  */
-const AUTOVERSE_CLOUD_URL = "http://localhost:3000";
+const AUTOVERSE_CLOUD_URL = "https://api.autoverse.com";
 
 /**
  * Initialize the Autoverse chat widget.
  *
  * Usage:
- *   import "autoverse-agent";                          // auto-init
- *   import { initWidget } from "autoverse-agent";      // manual
+ *   import "autoverse-fyp";                          // auto-init
+ *   import { initWidget } from "autoverse-fyp";      // manual
  *   initWidget({ botId: "abc123" });
  *
  * Safety:

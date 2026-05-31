@@ -17,7 +17,7 @@
 import { initWidget } from "./widget";
 
 // Re-export for manual usage:
-//   import { initWidget } from "autoverse-agent";
+//   import { initWidget } from "autoverse-fyp";
 //   initWidget({ botId: "abc123" });
 export { initWidget };
 

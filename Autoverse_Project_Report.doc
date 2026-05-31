@@ -30,27 +30,128 @@
     </p>
 
     <h2>2. System Architecture</h2>
-    <p>The system is built on a modern, decoupled architecture ensuring high performance and modularity:</p>
-    
-    <h3>2.1 Backend Engine (Node.js & Express)</h3>
+    <p>
+        Autoverse Agent is engineered on a modern, production-grade microservices architecture that strictly decouples client-side execution, core API routing, database persistence, and administrative controls. By splitting these responsibilities, the application secures high availability, limits memory footprint, guarantees sub-second latency, and simplifies continuous integration and multi-platform deployments (Railway, Vercel, and NPM).
+    </p>
+
+    <!-- Visual Architecture Diagram (Microsoft Word & Browser Compatible Table) -->
+    <div style="background-color: #F8F9FA; border: 1px solid #E2E8F0; border-radius: 8px; padding: 25px; margin: 20px 0; font-family: 'Segoe UI', sans-serif;">
+        <table style="width: 100%; border: none; border-collapse: collapse; margin: 0;">
+            <tr style="border: none;">
+                <td style="border: none; text-align: center; padding: 0;">
+                    <div style="background-color: #EBF5FB; border: 2px solid #3498DB; border-radius: 8px; padding: 12px; display: inline-block; width: 320px;">
+                        <strong style="color: #2C3E50; font-size: 12pt;">1. Customer Website (Host Env)</strong><br>
+                        <span style="color: #7F8C8D; font-size: 9.5pt;">Any third-party HTML/React/Vue storefront or portal</span>
+                    </div>
+                </td>
+            </tr>
+            <tr style="border: none;">
+                <td style="border: none; text-align: center; padding: 6px 0;">
+                    <span style="color: #BDC3C7; font-size: 16pt;">▼</span>
+                </td>
+            </tr>
+            <tr style="border: none;">
+                <td style="border: none; text-align: center; padding: 0;">
+                    <div style="background-color: #E8F8F5; border: 2px solid #2ECC71; border-radius: 8px; padding: 12px; display: inline-block; width: 320px;">
+                        <strong style="color: #2C3E50; font-size: 12pt;">2. autoverse-agent Widget</strong><br>
+                        <span style="color: #7F8C8D; font-size: 9.5pt;">Lightweight, zero-dependency browser client script</span>
+                    </div>
+                </td>
+            </tr>
+            <tr style="border: none;">
+                <td style="border: none; text-align: center; padding: 6px 0;">
+                    <span style="color: #BDC3C7; font-size: 16pt;">▼</span>
+                </td>
+            </tr>
+            <tr style="border: none;">
+                <td style="border: none; text-align: center; padding: 0;">
+                    <div style="background-color: #FEF9E7; border: 2px solid #F1C40F; border-radius: 8px; padding: 12px; display: inline-block; width: 440px; text-align: center;">
+                        <strong style="color: #2C3E50; font-size: 12pt;">3. api.autoverse.com (Express Server / API Gateway)</strong><br>
+                        <span style="color: #7F8C8D; font-size: 9.5pt;">Autonomous Node.js backend orchestrator and AI RAG engine</span>
+                        <table style="width: 100%; border: none; margin-top: 10px; border-collapse: separate; border-spacing: 5px;">
+                            <tr style="border: none;">
+                                <td style="width: 25%; background-color: #FBFCFC; border: 1px dashed #BDC3C7; border-radius: 4px; padding: 6px; font-size: 8.5pt; color: #34495E; text-align: center;">
+                                    🧠 <strong>AI Responses</strong><br>(Groq Llama-3.1)
+                                </td>
+                                <td style="width: 25%; background-color: #FBFCFC; border: 1px dashed #BDC3C7; border-radius: 4px; padding: 6px; font-size: 8.5pt; color: #34495E; text-align: center;">
+                                    💬 <strong>Chat History</strong><br>(Session stores)
+                                </td>
+                                <td style="width: 25%; background-color: #FBFCFC; border: 1px dashed #BDC3C7; border-radius: 4px; padding: 6px; font-size: 8.5pt; color: #34495E; text-align: center;">
+                                    🎨 <strong>Bot Configs</strong><br>(Custom styling)
+                                </td>
+                                <td style="width: 25%; background-color: #FBFCFC; border: 1px dashed #BDC3C7; border-radius: 4px; padding: 6px; font-size: 8.5pt; color: #34495E; text-align: center;">
+                                    🔑 <strong>Sessions</strong><br>(UUID tracking)
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+            <tr style="border: none;">
+                <td style="border: none; text-align: center; padding: 6px 0;">
+                    <span style="color: #BDC3C7; font-size: 16pt;">▼</span>
+                </td>
+            </tr>
+            <tr style="border: none;">
+                <td style="border: none; text-align: center; padding: 0;">
+                    <div style="background-color: #FDEDEC; border: 2px solid #E74C3C; border-radius: 8px; padding: 12px; display: inline-block; width: 320px;">
+                        <strong style="color: #2C3E50; font-size: 12pt;">4. Database Layer</strong><br>
+                        <span style="color: #7F8C8D; font-size: 9.5pt;">Secure, centralized persistent storage layer</span>
+                    </div>
+                </td>
+            </tr>
+            <tr style="border: none;">
+                <td style="border: none; text-align: center; padding: 6px 0;">
+                    <span style="color: #BDC3C7; font-size: 16pt;">▼</span>
+                </td>
+            </tr>
+            <tr style="border: none;">
+                <td style="border: none; text-align: center; padding: 0;">
+                    <div style="background-color: #F5EEF8; border: 2px solid #9B59B6; border-radius: 8px; padding: 12px; display: inline-block; width: 320px;">
+                        <strong style="color: #2C3E50; font-size: 12pt;">5. Vercel Dashboard</strong><br>
+                        <span style="color: #7F8C8D; font-size: 9.5pt;">Decoupled React management control panel hosted on Vercel</span>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <h3>2.1 Customer Website Layer & autoverse-agent Widget</h3>
+    <p>
+        The outermost layer consists of the **Customer Website** hosting the embedded **autoverse-agent widget**.
+    </p>
     <ul>
-        <li><strong>TypeScript Core:</strong> Strongly typed backend ensuring data integrity across API routes and AI logic.</li>
-        <li><strong>Groq API Integration:</strong> Utilizes Groq's high-speed inference engine (Llama-3 models) to generate responses in milliseconds, providing real-time chat experiences.</li>
-        <li><strong>File-Based Storage:</strong> To ensure true "zero-config" deployment without requiring complex database setups (like PostgreSQL or MongoDB), the system uses local, structured JSON files (<code>bots.json</code>, <code>history.json</code>) to persist bot configurations and chat histories.</li>
-        <li><strong>CORS & Security:</strong> Fully configured Cross-Origin Resource Sharing (CORS) allowing the chat widget to be embedded on any external domain securely.</li>
+        <li><strong>Decoupled NPM Module:</strong> The widget exists in its own separate workspace folder (<code>autoverse-agent/</code>) and is compiled into a lightweight client bundle with absolutely zero production dependencies. Building the script using <code>tsup</code> compiles all CSS, HTML nodes, and JS event-handling into a single, optimized 25 KB browser bundle (<code>dist/browser.mjs</code>).</li>
+        <li><strong>Shadow DOM Isolation:</strong> When injected, the widget encapsulates its DOM tree within a Shadow Root, ensuring its styling properties never bleed into the host customer site, and protecting the widget itself from style contamination by external CSS frameworks (such as Tailwind or Bootstrap).</li>
+        <li><strong>Main-Thread Protection:</strong> All client widget requests use asynchronous HTTP calls and run within a setTimeout tick, guaranteeing the widget never blocks host React rendering or page loads.</li>
     </ul>
 
-    <h3>2.2 Admin Dashboard (React & Vite)</h3>
+    <h3>2.2 api.autoverse.com Gateway Layer (autoverse-server)</h3>
+    <p>
+        The central nervous system of the project is the core backend API, hosted on **Railway** as **<code>api.autoverse.com</code>**.
+    </p>
     <ul>
-        <li><strong>Single Page Application (SPA):</strong> Built with React 18 and bundled with Vite for instantaneous hot-reloading and fast production builds.</li>
-        <li><strong>State Management:</strong> Uses customized hooks and API clients to sync UI state with the backend dynamically.</li>
-        <li><strong>Live Preview:</strong> As administrators tweak colors, fonts, and settings, the dashboard updates a live preview of the widget instantly.</li>
+        <li><strong>Express.js API Router:</strong> Configured with strictly defined Cross-Origin Resource Sharing (CORS) rules to secure endpoints while allowing the widget to call them securely from authorized hostnames.</li>
+        <li><strong>AI & RAG Inference Core:</strong> Houses the retrieval pipeline (Cheerio-based scraping, local vector similarity stores, and in-memory caches) and routes context-enriched prompts to Groq's high-speed LPU infrastructure.</li>
+        <li><strong>Dynamic Widget Delivery:</strong> Exposes a GET route (<code>/autoverse/widget.js</code>) that compiles host and Bot ID configurations on the fly, allowing developers to embed the widget using a single, static script tag.</li>
     </ul>
 
-    <h3>2.3 Embeddable Chat Widget</h3>
+    <h3>2.3 Database Layer</h3>
+    <p>
+        The persistent storage layer sits between the dashboard and backend gateway, securing persistence of critical configurations and chat transcripts.
+    </p>
     <ul>
-        <li><strong>Vanilla JavaScript Injection:</strong> A lightweight, dependency-free script (<code>widget.js</code>) that injects the chat interface into the host website's DOM.</li>
-        <li><strong>Shadow DOM / Scoped CSS:</strong> Ensures the widget's styles do not conflict with the host website's CSS, and vice versa.</li>
+        <li><strong>Decoupled Storage Operations:</strong> Separates read-heavy configuration retrieval from high-frequency write operations (chat transcripts) to protect configurations from database write-locks.</li>
+        <li><strong>Centralized Integrity:</strong> Holds structured tables for bot appearances, tone settings, scraping indices, and visitor UUID tracking.</li>
+    </ul>
+
+    <h3>2.4 Vercel Dashboard Layer</h3>
+    <p>
+        The administrative dashboard is a decoupled SPA built with React 18 and Vite, deployed on **Vercel's global Edge CDN** for instantaneous loading.
+    </p>
+    <ul>
+        <li><strong>Autonomous Execution:</strong> The dashboard runs independently of the backend API server. It compiles statically and communicates securely with the API gateway using <code>import.meta.env.VITE_API_URL</code> environment variables.</li>
+        <li><strong>Micro-Animation Engine:</strong> Uses CSS variables and state syncing to preview customizations (colors, border-radii, glassmorphism) instantly within an interactive preview simulator, without requiring database writes or page updates.</li>
     </ul>
 
     <h2>3. Major Features (Deep Dive)</h2>
@@ -144,53 +245,63 @@
     </table>
 
     <h2>6. Complete File Architecture & Technical Analysis</h2>
-    <p>This section provides a comprehensive breakdown of every critical file in the project workspace, analyzing its purpose and justifying its existence from the perspectives of <strong>Security</strong>, <strong>Speed</strong>, and <strong>Best Practices</strong>.</p>
+    <p>This section provides a comprehensive breakdown of every critical file across our three separated workspaces, analyzing their individual purposes and justifying their structures from the perspectives of <strong>Security</strong>, <strong>Speed</strong>, and <strong>Best Practices</strong>.</p>
 
-    <h3>6.1 Backend System (<code>autoverse-agent/</code>)</h3>
-    
+    <h3>6.1 Standalone Backend Server (<code>autoverse-server/</code>)</h3>
+    <p>
+        The dedicated backend server isolates core API routing, data ingestion, vector RAG math, and Groq inference tasks.
+    </p>
+
     <h4>6.1.1 Root Configuration Files</h4>
     <ul>
-        <li><code>package.json</code> & <code>package-lock.json</code>: Manages Node.js dependencies. Using a locked file ensures deterministic builds and protects against supply-chain attacks (Security), while avoiding dependency resolution overhead during deployment (Speed).</li>
-        <li><code>tsconfig.json</code> & <code>tsconfig.dev.json</code>: Strict TypeScript configurations. Enforcing static typing eliminates entire classes of runtime errors and type-confusion vulnerabilities (Security), whilst enabling the V8 engine to optimize code execution better (Speed).</li>
-        <li><code>tsup.config.ts</code>: Configures <code>tsup</code>, an esbuild-powered bundler. Esbuild compiles TypeScript natively in Go, offering compilation speeds 10-100x faster than traditional tsc or Webpack (Speed).</li>
-        <li><code>vitest.config.ts</code>: Configures the Vitest framework. It natively runs tests concurrently in worker threads, dramatically speeding up continuous integration pipelines (Speed).</li>
-        <li><code>.env</code>: Environment variable definitions. Keeps API keys and sensitive configuration out of version control, which is a fundamental security requirement (Security).</li>
+        <li><code>package.json</code>: Manages node-specific server dependencies. Keeps our runtime server separated from building/bundling packages (Security).</li>
+        <li><code>tsconfig.json</code>: Rigid CommonJS and Node typing configurations. Enforcing static typing eliminates runtime bugs and enables the V8 runtime engine to perform optimizations (Speed).</li>
+        <li><code>tsup.config.ts</code>: Bundles the entire server workspace into a single lightweight production file (<code>dist/server.js</code>), accelerating cold-starts and reducing server footprint (Speed).</li>
+        <li><code>.env</code>: Securely persists database, Groq, and server port configuration variables away from version control (Security).</li>
     </ul>
 
-    <h4>6.1.2 Core Source Files (<code>/src</code>)</h4>
+    <h4>6.1.2 Orchestrator & Server Source Files (<code>/src</code>)</h4>
     <ul>
-        <li><code>autoverse.ts</code>: The central orchestrator class. It encapsulates the bot's state, preventing global scope pollution and memory leaks (Security & Best Practice).</li>
-        <li><code>server.ts</code>: The Express.js server entry point. It configures strictly defined CORS headers and routing, dropping unauthorized external requests instantly before they reach the logic layer (Security).</li>
-        <li><code>widget.ts</code>: The source code for the frontend injection script. It is compiled into a lightweight, zero-dependency vanilla JS bundle to guarantee millisecond load times on client websites without blocking the main thread (Speed).</li>
-        <li><code>browser.ts</code> & <code>index.ts</code>: Module boundaries. <code>index.ts</code> explicitly defines the public API, preventing exposure of internal utility functions to external modules (Security).</li>
+        <li><code>index.ts</code>: Server launchpad and entry point. Loads environmental states and mounts active listeners securely (Best Practice).</li>
+        <li><code>server.ts</code>: Express configuration exposing CORS-enabled routes, API routes, and history endpoints. Strict CORS settings filter out unauthorized cross-origin requests immediately (Security).</li>
+        <li><code>autoverse.ts</code>: Central orchestration instance coordinate. Manages system configurations, intent classifier workflows, and active RAG prompts without leaking variables to global scopes (Security).</li>
+        <li><code>widget.ts</code>: Servers a dynamic, host-configured widget build on-the-fly, allowing client sites to embed using a simple static script tag.</li>
     </ul>
 
-    <h4>6.1.3 Agent Logic Layer (<code>/src/agent</code>)</h4>
+    <h4>6.1.3 AI Agent Core & Algorithms (<code>/src/agent</code> & <code>/src/recommender</code>)</h4>
     <ul>
-        <li><code>intentClassifier.ts</code>: Pre-processes user input to determine the query type before invoking heavy LLMs. This acts as a routing optimization, bypassing expensive operations for simple queries (Speed).</li>
-        <li><code>action.ts</code> & <code>actionExecutor.ts</code>: Defines and executes rigid functional schemas. By forcing the AI to output strictly formatted JSON actions (rather than executing raw code or SQL), this creates a hard security boundary against Prompt Injection and unauthorized data access (Security).</li>
-        <li><code>planner.ts</code>: Breaks down multi-step user queries, ensuring logical execution without overloading the LLM context window, which reduces token processing latency (Speed).</li>
+        <li><code>intentClassifier.ts</code>: Syntactically routes users' questions without triggering high-latency LLM calls for standard tasks, reducing response latency to milliseconds (Speed).</li>
+        <li><code>planner.ts</code>: Breaks down multi-layered requests into incremental execution blocks, protecting models from token-buffer limits (Speed).</li>
+        <li><code>action.ts</code> & <code>actionExecutor.ts</code>: Converts chatbot intents into highly rigid JSON execution instructions rather than executing raw SQL/JS, mitigating any prompt injection risks (Security).</li>
+        <li><code>ranking.ts</code> (Recommender): Provides lightweight cosine-similarity calculations and relevancy weighting to output product recommendations in milliseconds (Speed).</li>
     </ul>
 
-    <h4>6.1.4 Retrieval & AI Core (<code>/src/core</code>)</h4>
+    <h4>6.1.4 Data Ingestion & Scrapers (<code>/src/ingestion</code>)</h4>
     <ul>
-        <li><code>groq.ts</code>: The interface for the Groq API. Groq runs on specialized Language Processing Units (LPUs) rather than GPUs, achieving 500+ tokens per second. This makes the AI feel instantaneous to the end-user (Speed).</li>
-        <li><code>rag.ts</code>: Orchestrates Retrieval-Augmented Generation. This strictly limits the AI to only use authorized context provided by the vector store, heavily reducing hallucinations and preventing the AI from leaking general, potentially unsafe knowledge (Security).</li>
-        <li><code>cache.ts</code>: An in-memory key-value cache. It intercepts repeated queries (e.g., "What is your pricing?") and serves them instantly without hitting the Groq API, providing sub-millisecond response times and protecting against Denial-of-Wallet (DoW) attacks (Speed & Security).</li>
-        <li><code>vectorStore.ts</code> & <code>embeddings.ts</code>: Manages mathematical representations of text. Uses high-performance cosine-similarity math algorithms to instantly find relevant text chunks among thousands of lines of scraped data (Speed).</li>
-        <li><code>retriever.ts</code>: The bridge between the vector store and the RAG pipeline.</li>
+        <li><code>crawler.ts</code>: Crawls target domains asynchronously with concurrency caps, protecting the target site from Denial of Service (DoS) behaviors (Best Practice).</li>
+        <li><code>extractor.ts</code>: Uses Cheerio to parse HTML fast without spinning up memory-heavy chromium browsers, and sanitizes scraped text blocks to avoid cross-site scripting (Speed & Security).</li>
     </ul>
 
-    <h4>6.1.5 Data Ingestion (<code>/src/ingestion</code>)</h4>
+    <h4>6.1.5 Retrieval Core & Stores (<code>/src/core</code>, <code>/src/store</code>, <code>/src/types</code>)</h4>
     <ul>
-        <li><code>crawler.ts</code>: Navigates target websites. It is designed with strict timeouts and concurrency limits to prevent the server from being bogged down by infinite loops or tarpits (Speed & Security).</li>
-        <li><code>extractor.ts</code>: Uses Cheerio to parse HTML. Because Cheerio works on raw markup rather than spinning up a headless browser, it extracts data incredibly fast. It also sanitizes scraped HTML to prevent Stored XSS if the data is ever rendered raw (Speed & Security).</li>
+        <li><code>rag.ts</code>: Feeds models with semantic context from target domains, eliminating hallucinations and ensuring private host information remains isolated (Security).</li>
+        <li><code>groq.ts</code>: Groq interface enabling 500+ token/sec inference speeds using LPU architectures (Speed).</li>
+        <li><code>cache.ts</code>: In-memory key-value caching intercepts repetitive support questions without consuming LLM APIs, preventing Denial of Wallet (DoW) vectors (Speed & Security).</li>
+        <li><code>vectorStore.ts</code> & <code>embeddings.ts</code>: High-speed mathematical calculations for vector comparison.</li>
+        <li><code>botStore.ts</code> & <code>historyStore.ts</code>: Centralizes file storage operations. Writing chat histories separately prevents write-locks on read-heavy appearance configuration maps (Best Practice).</li>
     </ul>
 
-    <h4>6.1.6 Persistence & Types (<code>/src/store</code>, <code>/src/types</code>)</h4>
+    <h3>6.2 Highly Optimized NPM Package (<code>autoverse-fyp/</code>)</h3>
+    <p>
+        The lightweight widget library published to NPM. It has been completely stripped of all server-side dependencies and files, creating a zero-dependency, ultra-light build.
+    </p>
     <ul>
-        <li><code>botStore.ts</code> & <code>historyStore.ts</code>: Manages file-based persistence. By separating bot configuration from chat logs, the system ensures that high-frequency write operations (chatting) do not lock or corrupt read-heavy configuration files (Speed & Security).</li>
-        <li><code>bot.ts</code>, <code>product.ts</code>: TypeScript interfaces. They provide strict data contracts. Any malformed data coming from the database or API is caught at the boundary layer, preventing catastrophic runtime crashes (Security).</li>
+        <li><code>package.json</code>: Declares **zero production dependencies**, resulting in a tiny npm bundle footprint and zero installation overhead (Speed).</li>
+        <li><code>tsup.config.ts</code>: Utilizes <code>tsup</code> to build two target assets: an index package (<code>dist/index.js</code>) for ESM/CJS developer builds, and a browser bundle (<code>dist/browser.mjs</code>) for single-tag web injection.</li>
+        <li><code>tsconfig.json</code>: Strict ES2020 browser and DOM compiler configurations.</li>
+        <li><code>src/widget.ts</code>: Pure, vanilla client bubble generator with zero external imports. Encapsulates interactive support views, custom Micro-animations, dynamic styles, and local session stores.</li>
+        <li><code>src/browser.ts</code>: Side-effect browser installer that auto-mounts widgets only in document-ready states, eliminating React render blocks or server-side rendering (SSR) crashes (Best Practice).</li>
+        <li><code>src/index.ts</code>: Public package module boundary, exporting strictly client-facing widget controllers (Best Practice).</li>
     </ul>
 
     <h3>6.2 Frontend Dashboard (<code>dashboard/</code>)</h3>

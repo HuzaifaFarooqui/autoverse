@@ -1,0 +1,32 @@
+{
+    "name": "autoverse-server",
+    "version": "1.0.0",
+    "description": "Production API gateway and AI RAG engine for Autoverse.",
+    "main": "dist/server.js",
+    "engines": {
+        "node": ">=20.0.0"
+    },
+    "scripts": {
+        "build": "tsup",
+        "start": "node dist/server.js",
+        "dev": "ts-node --project tsconfig.json src/index.ts",
+        "test": "vitest run"
+    },
+    "dependencies": {
+        "axios": "^1.6.2",
+        "cheerio": "^1.0.0-rc.12",
+        "cors": "^2.8.6",
+        "express": "^5.2.1",
+        "uuid": "^14.0.0",
+        "dotenv": "^16.3.1",
+        "tsup": "^8.5.0",
+        "typescript": "^5.3.2"
+    },
+    "devDependencies": {
+        "@types/cors": "^2.8.19",
+        "@types/express": "^5.0.6",
+        "@types/node": "^20.10.0",
+        "ts-node": "^10.9.1",
+        "vitest": "^4.0.18"
+    }
+}
