@@ -29,8 +29,10 @@ export function autoverse(config: AutoverseConfig = {}): Router {
     // ===== WIDGET JS ENDPOINT =====
     router.get("/autoverse/widget.js", (req, res) => {
         // Determine server's own public URL
-        const publicUrl = process.env.PUBLIC_URL
-            || `${req.protocol}://${req.headers.host}`;
+        const rawProto = req.headers["x-forwarded-proto"] as string || req.protocol;
+        const host = req.headers.host || "";
+        const protocol = (host.includes("railway.app") || rawProto === "https") ? "https" : rawProto;
+        const publicUrl = process.env.PUBLIC_URL || `${protocol}://${host}`;
         const botId = (req.query.botId as string) || "";
         const js = getWidgetHTML(publicUrl, botId);
         res.type("application/javascript").send(js);
@@ -38,8 +40,10 @@ export function autoverse(config: AutoverseConfig = {}): Router {
 
     // ===== SERVER INFO (for dashboard to auto-detect its own URL) =====
     router.get("/autoverse/api/server-info", (req, res) => {
-        const publicUrl = process.env.PUBLIC_URL
-            || `${req.protocol}://${req.headers.host}`;
+        const rawProto = req.headers["x-forwarded-proto"] as string || req.protocol;
+        const host = req.headers.host || "";
+        const protocol = (host.includes("railway.app") || rawProto === "https") ? "https" : rawProto;
+        const publicUrl = process.env.PUBLIC_URL || `${protocol}://${host}`;
         return res.json({ publicUrl });
     });
 
@@ -51,6 +55,29 @@ export function autoverse(config: AutoverseConfig = {}): Router {
         }
         return res.json(bot.appearance);
     });
+
+    // ===== STRICT CORS FOR DASHBOARD ONLY =====
+    const dashboardOrigins = process.env.ALLOWED_ORIGINS
+        ? process.env.ALLOWED_ORIGINS.split(",").map(o => o.trim())
+        : [
+            "https://autoverse-nmbw.vercel.app",
+            "https://autoverse-sand.vercel.app",
+            "https://autoverse-fyp.vercel.app"
+          ];
+
+    const secureDashboardCors = cors({
+        origin: function (origin, callback) {
+            if (!origin) return callback(null, true);
+            if (dashboardOrigins.indexOf(origin) !== -1 || origin.includes("localhost") || origin.includes("127.0.0.1")) {
+                callback(null, true);
+            } else {
+                callback(new Error("CORS blocked for this dashboard origin"));
+            }
+        },
+        credentials: true
+    });
+
+    router.use("/autoverse/api/dashboard", secureDashboardCors);
 
     // ===== DASHBOARD API =====
     router.post("/autoverse/api/dashboard/bots", (req, res) => {
@@ -234,6 +261,7 @@ export function autoverse(config: AutoverseConfig = {}): Router {
  */
 export async function startServer(config: ServerConfig = {}) {
     const app = express();
+    app.enable("trust proxy");
     const port = config.port || parseInt(process.env.PORT || "3000");
     const publicUrl = config.publicUrl || process.env.PUBLIC_URL || `http://localhost:${port}`;
 
@@ -274,7 +302,7 @@ export async function startServer(config: ServerConfig = {}) {
     app.listen(port, () => {
         console.log(`\n 🤖 Autoverse Agent running on ${publicUrl}`);
         console.log(` 📊 Local Dashboard: ${publicUrl}`);
-        console.log(` ☁️  Cloud Dashboard: https://autoverse-sand.vercel.app?connect=${publicUrl}`);
+        console.log(` ☁️  Cloud Dashboard: https://autoverse-nmbw.vercel.app?connect=${publicUrl}`);
         console.log(`\n 📦 To embed on any website, add this script tag:`);
         console.log(`   <script src="${publicUrl}/autoverse/widget.js?botId=YOUR_BOT_ID"></script>`);
         console.log(`\n 📦 Or with npm:`);

@@ -564,7 +564,7 @@ export function getWidgetHTML(serverUrl: string, botId: string): string {
 /**
  * Default cloud server URL. Update this to your deployed server.
  */
-const AUTOVERSE_CLOUD_URL = "https://api.autoverse.com";
+const AUTOVERSE_CLOUD_URL = "https://autoverse-production-be8b.up.railway.app";
 
 /**
  * Initialize the Autoverse chat widget.
