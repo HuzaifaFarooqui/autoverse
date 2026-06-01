@@ -234,13 +234,12 @@ export function getWidgetHTML(serverUrl: string, botId: string): string {
     var setupView = document.createElement('div');
     setupView.id = 'av-setup';
     setupView.innerHTML = [
-        '<div class="av-logo">🤖</div>',
         '<h3>Welcome to Autoverse</h3>',
         '<p>Connect your AI customer service assistant to get started.</p>',
         '<input id="av-bot-input" type="text" placeholder="Enter your Bot ID" autocomplete="off" spellcheck="false">',
         '<button class="av-connect-btn" id="av-connect-btn">🔗 Connect Bot</button>',
         '<div class="av-error" id="av-setup-error"></div>',
-        '<div class="av-help">Get your Bot ID from the<br><a href="' + SERVER_URL + '" target="_blank">Autoverse Dashboard →</a></div>'
+        '<div class="av-help">Get your Bot ID from the<br><a href="https://autoverse-nmbw.vercel.app" target="_blank">Autoverse Dashboard →</a></div>'
     ].join('');
 
     var chatView = document.createElement('div');
